@@ -63,7 +63,7 @@ public class LogEntry
 
     public String toString()
     {
-        return String.format("Date: %-15s Time: %-20s Description: %-30s Vendor: %-25s Amount: %.2f\n", date, time,
+        return String.format("Date: %-15s Time: %-20s Description: %-25s Vendor: %-20s Amount: %.2f\n", date, time,
                 description,vendor,amount);
     }
 }

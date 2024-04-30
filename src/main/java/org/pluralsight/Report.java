@@ -50,10 +50,20 @@ public class Report
                         .collect(Collectors.toList());
         }
 
+       //public static List<LogEntry> customSearch(List<LogEntry>logEntries)
+       // {
+
+       // }
+
         public static void reportResults(List<LogEntry>logEntries)
         {
                 for(LogEntry entry : logEntries){
+
                         System.out.println(entry);
+                }
+                if(logEntries.isEmpty())
+                {
+                        System.out.println("No records found.");
                 }
         }
 

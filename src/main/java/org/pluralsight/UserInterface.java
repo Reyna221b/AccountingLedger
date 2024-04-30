@@ -16,19 +16,18 @@ public class UserInterface
         while (true) {
             try {
                 System.out.println();
-                System.out.println("Home Screen!");
-                System.out.println("---------------------------------");
+                System.out.println("Home Screen");
+                System.out.println("-".repeat(30));
                 System.out.println("D - Add Deposit");
                 System.out.println("P - Make Payments");
                 System.out.println("L - Ledger");
                 System.out.println("X - Exit");
-                System.out.println();
+                System.out.println("-".repeat(30));
                 System.out.print("Enter your choice: ");
                 return userInput.nextLine().strip().toLowerCase();
 
             } catch (Exception ex) {
                 System.out.println("invalid selection!");
-
             }
         }
     }
@@ -47,16 +46,13 @@ public class UserInterface
                 System.out.println("You have successfully deposited $ " + amount + " to your account.");
                 System.out.print("\nWould you like to make another deposit? (Y/N): ");
                 String input = userInput.nextLine().toLowerCase().strip();
-                if(input.equals("n"))
+                if(input.equals("n")||input.equals("no"))
                 {
                     break;
                 }
-
             }
             catch (Exception ex) {
                 System.out.println("invalid input!");
-
-
             }
 
         }
@@ -78,7 +74,7 @@ public class UserInterface
 
                 System.out.print("\nWould you like to make another Payment? (Y/N): ");
                 String input = userInput.nextLine().toLowerCase().strip();
-                if(input.equals("n"))
+                if(input.equals("n")||input.equals("no"))
                 {
                     break;
                 }
@@ -126,6 +122,9 @@ public class UserInterface
 
             System.out.println(logEntries.get(i));
         }
+        if (logEntries.isEmpty()){
+            System.out.println("No Record Found.");
+        }
         System.out.println();
     }
 
@@ -139,7 +138,6 @@ public class UserInterface
                 System.out.println(entry);
             }
         }
-
     }
 
     public void displayPayments()
@@ -151,7 +149,6 @@ public class UserInterface
                 System.out.println(entry);
             }
         }
-
     }
 
     public int getReportDisplay(){
@@ -166,7 +163,7 @@ public class UserInterface
                 System.out.println("1 - Month To Date");
                 System.out.println("2 - Previous Month");
                 System.out.println("3 - Year To Date");
-                System.out.println("4 - Previous Month");
+                System.out.println("4 - Previous Year");
                 System.out.println("5 - Search By Vendor");
                 System.out.println("0 - Exit To Ledger Screen");
                 System.out.println();
@@ -186,7 +183,7 @@ public class UserInterface
         {
             try
             {
-                System.out.println("Please Enter Vendor's Name: ");
+                System.out.print("Please Enter Vendor's Name: ");
                 return userInput.nextLine().strip().toLowerCase();
             }
             catch(Exception ex)

@@ -1,8 +1,6 @@
-date|time|vendor|amount
-2024-04-30 | 12:17:19 | Invoice Paid 10011 | work | 500.00
-2024-04-30 | 12:18:05 | Invoice Paid 10011 | work | 300.00
-2024-04-30 | 12:19:13 | head phones | sony | -259.11
-2024-04-30 | 12:21:52 | Invoice Paid 10011 | mom | 20.00
-2024-04-30 | 12:22:33 | food | Raising canes | -40.00
-2024-04-30 | 12:51:41 | shoes | nike | -190.34
-2024-04-30 | 14:15:01 | Invoice Paid | school | 678.22
+date|time|description|vendor|amount
+2024-04-30 | 15:36:34 | Invoice Paid | work | 300.50
+2024-04-30 | 15:37:39 | shoes | nike | -198.99
+2024-04-30 | 15:39:14 | movie tickets | Cinemark | -22.00
+2024-04-30 | 15:50:45 | Invoice Paid | work | 400.00
+2024-04-30 | 15:55:02 | Invoice Paid | Friend | 20.00

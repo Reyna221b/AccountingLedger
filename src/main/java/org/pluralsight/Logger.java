@@ -14,7 +14,6 @@ public class Logger
     private final String LOG_DIRECTORY_PATH = "files";
     private final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ISO_DATE;
     private final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("kk:mm:ss");
-    boolean header = false;
     boolean firstLine = true;
 
     private String fileName;
@@ -50,7 +49,7 @@ public class Logger
         {
             if (logFile.length() == 0) {
 
-                writer.write("date|time|vendor|amount\n");
+                writer.write("date|time|description|vendor|amount\n");
             }
 
             writer.write(String.format("%s | %s | %s | %s | %.2f\n", date.format(DATE_FORMAT), time.format(TIME_FORMAT),
@@ -80,11 +79,11 @@ public class Logger
 
                 Scanner lineScanner = new Scanner(line);
                 lineScanner.useDelimiter("\\s\\|\\s");
-                if (firstLine)
-                {
-                    firstLine = false;
-                    continue;
-                }
+                 if (firstLine)
+                 {
+                     firstLine = false;
+                      continue;
+                 }
                 LocalDate date = LocalDate.parse(lineScanner.next(), DATE_FORMAT);
                 LocalTime time = LocalTime.parse(lineScanner.next(), TIME_FORMAT);
                 String description = lineScanner.next();
