@@ -1,7 +1,5 @@
 package org.pluralsight;
 
-
-
 import org.pluralsight.templates.LogEntry;
 
 import java.util.ArrayList;
@@ -37,29 +35,58 @@ public class UserInterface
 
     public void addDeposit()
     {
+        while (true) {
+            try {
+                System.out.print("Please enter the amount you would like to deposit: ");
+                double amount = Double.parseDouble(userInput.nextLine().strip());
+                System.out.print("Please enter who you got paid by: ");
+                String name = userInput.nextLine().strip();
+                String invoice = "Invoice Paid" ;
 
-        System.out.print("Please enter the amount you would like to deposit: ");
-        double amount = Double.parseDouble(userInput.nextLine().strip());
-        System.out.print("Please enter who you got paid by: ");
-        String name = userInput.nextLine().strip();
-        i++;
-        String invoice = "Invoice Paid 100" + i;
+                logger.logMessage(invoice, name, amount);
+                System.out.println("You have successfully deposited $ " + amount + " to your account.");
+                System.out.print("\nWould you like to make another deposit? (Y/N): ");
+                String input = userInput.nextLine().toLowerCase().strip();
+                if(input.equals("n"))
+                {
+                    break;
+                }
+
+            }
+            catch (Exception ex) {
+                System.out.println("invalid input!");
 
 
-        logger.logMessage(invoice, name, amount);
+            }
+
+        }
+
     }
 
     public void makePayment()
     {
-        System.out.print("Please enter a description of what you purchased:  ");
-        String itemDescription = userInput.nextLine().strip();
-        System.out.print("Please enter vendors: ");
-        String name = userInput.nextLine().strip();
-        System.out.print("Please enter the amount paid: $ ");
-        double amount = Double.parseDouble(userInput.nextLine().strip());
-        amount = amount * -1;
-        logger.logMessage(itemDescription,name,amount);
+        while (true) {
+            try {
+                System.out.print("Please enter a description of what you purchased:  ");
+                String itemDescription = userInput.nextLine().strip();
+                System.out.print("Please enter vendor's name: ");
+                String name = userInput.nextLine().strip();
+                System.out.print("Please enter the amount paid: $ ");
+                double amount = Double.parseDouble(userInput.nextLine().strip());
+                amount = amount * -1;
+                logger.logMessage(itemDescription,name,amount);
 
+                System.out.print("\nWould you like to make another Payment? (Y/N): ");
+                String input = userInput.nextLine().toLowerCase().strip();
+                if(input.equals("n"))
+                {
+                    break;
+                }
+            }
+            catch (Exception ex) {
+                System.out.println("invalid input!");
+            }
+        }
     }
 
 
@@ -93,10 +120,9 @@ public class UserInterface
         ArrayList<LogEntry> logEntries = logger.readEntries();
         System.out.println();
         System.out.println("All Entries");
-        System.out.println("-".repeat(35));
+        System.out.println("-".repeat(70));
 
         for (int i = logEntries.size()-1; i >= 0; i--){
-
 
             System.out.println(logEntries.get(i));
         }
@@ -107,7 +133,6 @@ public class UserInterface
     {
         ArrayList<LogEntry> logEntries = logger.readEntries();
         for(LogEntry entry: logEntries){
-
 
             if (entry.getAmount() > 0 )
             {
@@ -127,6 +152,48 @@ public class UserInterface
             }
         }
 
+    }
+
+    public int getReportDisplay(){
+        while (true)
+        {
+            try
+            {
+                System.out.println();
+                System.out.println("Report Screen");
+                System.out.println("---------------------------------");
+                System.out.println("Search By: ");
+                System.out.println("1 - Month To Date");
+                System.out.println("2 - Previous Month");
+                System.out.println("3 - Year To Date");
+                System.out.println("4 - Previous Month");
+                System.out.println("5 - Search By Vendor");
+                System.out.println("0 - Exit To Ledger Screen");
+                System.out.println();
+                System.out.print("Enter your choice: ");
+                return Integer.parseInt(userInput.nextLine().strip());
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Invalid selection. Please Try Again.");
+            }
+        }
+    }
+
+    public String getVendorName()
+    {
+        while (true)
+        {
+            try
+            {
+                System.out.println("Please Enter Vendor's Name: ");
+                return userInput.nextLine().strip().toLowerCase();
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Invalid Input. Please Try Again.");
+            }
+        }
     }
 
 }

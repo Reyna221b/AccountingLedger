@@ -1,11 +1,13 @@
 package org.pluralsight;
 import org.pluralsight.templates.LogEntry;
 
+import java.util.List;
 
 
 public class Account
 {
-    //private Scanner userInput = new Scanner(System.in);
+    private final Logger logger = new Logger("transactions");
+
     UserInterface ui = new UserInterface();
 
 
@@ -19,7 +21,7 @@ public class Account
 
             switch(choice)
             {
-                case "d": // available books
+                case "d":
                     ui.addDeposit();
                     break;
                 case "p":
@@ -32,7 +34,7 @@ public class Account
                     System.out.println("Goodbye!");
                     return;
                 default:
-                    System.out.println("That was an invalid selection.");
+                    System.out.println("****That was an invalid selection.****");
                     break;
             }
 
@@ -58,18 +60,65 @@ public class Account
                     ui.displayPayments();
                     break;
                 case "r":
-                    System.out.println("Goodbye!");
-                    return;
+                    reportDisplayScreen();
+                    break;
                 case "h":
                     System.out.println("Back to home screen we go!!");
                     return;
                 default:
-                    System.out.println("That was an invalid selection.");
+                    System.out.println("*****That was an invalid selection.******");
                     break;
             }
 
         }
     }
 
+    public void reportDisplayScreen()
+    {
+        int choice = ui.getReportDisplay();
+        List<LogEntry> logEntryList = logger.readEntries();
+
+        switch (choice)
+        {
+            case 1:
+                List<LogEntry> monthToDate = Report.monthToDate(logEntryList);
+                System.out.println("Month to date Report: ");
+                System.out.println("-".repeat(60));
+                Report.reportResults(monthToDate);
+                break;
+            case 2:
+                List<LogEntry> previousMonth = Report.previousMonth(logEntryList);
+                System.out.println("Previous Month Report: ");
+                System.out.println("-".repeat(60));
+                Report.reportResults(previousMonth);
+                break;
+            case 3:
+                List<LogEntry> yearToDate = Report.yearToDate(logEntryList);
+                System.out.println("Year to date Report ");
+                System.out.println("-".repeat(60));
+                Report.reportResults(yearToDate);
+                break;
+            case 4:
+                List<LogEntry> previousYear = Report.previousYear(logEntryList);
+                System.out.println("Previous Year Report: ");
+                System.out.println("-".repeat(60));
+                Report.reportResults(previousYear);
+                break;
+            case 5:
+                String name = ui.getVendorName();
+                System.out.println("Vendor Report ");
+                System.out.println("-".repeat(60));
+                List<LogEntry> searchVendor = Report.searchByVendor(logEntryList,name);
+                Report.reportResults(searchVendor);
+                break;
+            case 6:
+                System.out.println("Back to Ledger screen we go!!");
+                return;
+            default:
+                System.out.println("That was an invalid selection.");
+                break;
+        }
+
+    }
 
 }

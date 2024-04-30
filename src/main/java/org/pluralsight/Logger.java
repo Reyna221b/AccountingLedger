@@ -36,6 +36,7 @@ public class Logger
         }
     }
 
+
     public void logMessage(String description, String vendor, double amount)
     {
 
@@ -47,11 +48,9 @@ public class Logger
             PrintWriter writer = new PrintWriter(fileWriter)
         )
         {
-            if(!header)
-            {
-                writer.write("id|name|gross pay\n");
-                header = true;
+            if (logFile.length() == 0) {
 
+                writer.write("date|time|vendor|amount\n");
             }
 
             writer.write(String.format("%s | %s | %s | %s | %.2f\n", date.format(DATE_FORMAT), time.format(TIME_FORMAT),
@@ -59,7 +58,7 @@ public class Logger
         }
         catch (IOException ex)
         {
-
+            System.out.println("Failed to enter data.");
         }
 
     }
@@ -77,21 +76,20 @@ public class Logger
             firstLine = true;
             while(scanner.hasNextLine())
             {
-
                 String line = scanner.nextLine();
+
+                Scanner lineScanner = new Scanner(line);
+                lineScanner.useDelimiter("\\s\\|\\s");
                 if (firstLine)
                 {
                     firstLine = false;
                     continue;
                 }
-                Scanner lineScanner = new Scanner(line);
-                lineScanner.useDelimiter("\\s\\|\\s");
                 LocalDate date = LocalDate.parse(lineScanner.next(), DATE_FORMAT);
                 LocalTime time = LocalTime.parse(lineScanner.next(), TIME_FORMAT);
                 String description = lineScanner.next();
                 String vendor = lineScanner.next();
                 double amount = lineScanner.nextDouble();
-
 
                 LogEntry logEntry = new LogEntry(date, time, description, vendor, amount);
 
@@ -104,7 +102,7 @@ public class Logger
         {
 
         }
-
         return logEntries;
     }
+
 }
