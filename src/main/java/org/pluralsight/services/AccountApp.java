@@ -1,10 +1,14 @@
-package org.pluralsight;
-import org.pluralsight.templates.LogEntry;
+package org.pluralsight.services;
+import org.pluralsight.models.LogEntry;
+import org.pluralsight.models.Report;
+import org.pluralsight.ui.Colors;
+import org.pluralsight.ui.UserInterface;
 
+import java.util.Collections;
 import java.util.List;
 
 
-public class Account
+public class AccountApp
 {
     private final Logger logger = new Logger("transactions");
 
@@ -34,7 +38,7 @@ public class Account
                     System.out.println("Goodbye!");
                     return;
                 default:
-                    System.out.println("****That was an invalid selection.****");
+                    System.out.println(Colors.RED + "****That was an invalid selection.****"+ Colors.RESET);
                     break;
             }
 
@@ -62,10 +66,11 @@ public class Account
                     reportDisplayScreen();
                     break;
                 case "h":
-                    System.out.println("Back to home screen we go!!");
+                    ui.message(Colors.CYAN+"Back to home screen we go!!"+ Colors.RESET);
+
                     return;
                 default:
-                    System.out.println("*****That was an invalid selection.******");
+                    ui.message(Colors.RED+"*****That was an invalid selection.******"+Colors.RESET);
                     break;
             }
 
@@ -84,40 +89,44 @@ public class Account
             {
                 case 1:
                     List<LogEntry> monthToDate = Report.monthToDate(logEntryList);
-                    System.out.println("\nMonth to date Report: ");
-                    System.out.println("-".repeat(60));
+                    Collections.reverse(monthToDate);
+                    ui.message("\nMonth to date Report: ");
+                    ui.message("-".repeat(60));
                     Report.reportResults(monthToDate);
                     break;
                 case 2:
                     List<LogEntry> previousMonth = Report.previousMonth(logEntryList);
-                    System.out.println("\nPrevious Month Report: ");
-                    System.out.println("-".repeat(60));
+                    Collections.reverse(previousMonth);
+                    ui.message("\nPrevious Month Report: ");
+                    ui.message("-".repeat(60));
                     Report.reportResults(previousMonth);
                     break;
                 case 3:
                     List<LogEntry> yearToDate = Report.yearToDate(logEntryList);
-                    System.out.println("\nYear to date Report ");
-                    System.out.println("-".repeat(60));
+                    Collections.reverse(yearToDate);
+                    ui.message("\nYear to date Report ");
+                    ui.message("-".repeat(60));
                     Report.reportResults(yearToDate);
                     break;
                 case 4:
                     List<LogEntry> previousYear = Report.previousYear(logEntryList);
-                    System.out.println("\nPrevious Year Report: ");
-                    System.out.println("-".repeat(60));
+                    Collections.reverse(previousYear);
+                    ui.message("\nPrevious Year Report: ");
+                    ui.message("-".repeat(60));
                     Report.reportResults(previousYear);
                     break;
                 case 5:
                     String name = ui.getVendorName();
-                    System.out.println("\nVendor Report ");
-                    System.out.println("-".repeat(60));
+                    ui.message("\nVendor Report ");
+                    ui.message("-".repeat(60));
                     List<LogEntry> searchVendor = Report.searchByVendor(logEntryList,name);
                     Report.reportResults(searchVendor);
                     break;
                 case 0:
-                    System.out.println("Back to Ledger screen we go!!");
+                    ui.message(Colors.CYAN+"Back to Ledger screen we go!!"+ Colors.RESET);
                     return;
                 default:
-                    System.out.println("That was an invalid selection.");
+                    ui.message(Colors.RED+"*****That was an invalid selection.******"+Colors.RESET);
                     break;
             }
         }

@@ -1,4 +1,6 @@
-package org.pluralsight.templates;
+package org.pluralsight.models;
+
+import org.pluralsight.ui.Colors;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -63,7 +65,8 @@ public class LogEntry
 
     public String toString()
     {
-        return String.format("Date: %-15s Time: %-20s Description: %-25s Vendor: %-20s Amount: %.2f\n", date, time,
-                description,vendor,amount);
+        return String.format(Colors.WHITE_BG + Colors.BLACK +
+                        "Date: %-15s Time: %-20s Description: %-25s Vendor: %-20s Amount: %.2f" + Colors.RESET +"\n",
+                date, time, description,vendor,amount);
     }
 }

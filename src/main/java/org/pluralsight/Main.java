@@ -1,10 +1,12 @@
 package org.pluralsight;
 
+import org.pluralsight.services.AccountApp;
+
 public class Main
 {
     public static void main(String[] args)
     {
-        Account account = new Account();
+        AccountApp account = new AccountApp();
         account.run();
     }
 }

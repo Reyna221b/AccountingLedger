@@ -1,6 +1,6 @@
-package org.pluralsight;
+package org.pluralsight.services;
 
-import org.pluralsight.templates.LogEntry;
+import org.pluralsight.models.LogEntry;
 
 import java.io.*;
 import java.time.LocalDate;

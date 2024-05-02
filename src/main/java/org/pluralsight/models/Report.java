@@ -1,10 +1,8 @@
-package org.pluralsight;
+package org.pluralsight.models;
 
-import org.pluralsight.templates.LogEntry;
-
+import java.util.Collections;
 import java.util.List;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Report
@@ -57,6 +55,7 @@ public class Report
 
         public static void reportResults(List<LogEntry>logEntries)
         {
+                Collections.reverse(logEntries);
                 for(LogEntry entry : logEntries){
 
                         System.out.println(entry);

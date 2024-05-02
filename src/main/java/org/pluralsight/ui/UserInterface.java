@@ -1,33 +1,37 @@
-package org.pluralsight;
+package org.pluralsight.ui;
 
-import org.pluralsight.templates.LogEntry;
+import org.pluralsight.services.Logger;
+import org.pluralsight.models.LogEntry;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface
 {
     static final Scanner userInput = new Scanner(System.in);
-    private static int i = 0;
     private final Logger logger = new Logger("transactions");
 
     public static String getHomeScreenChoice()
     {
         while (true) {
             try {
-                System.out.println();
+                System.out.println(Colors.YELLOW);
                 System.out.println("Home Screen");
                 System.out.println("-".repeat(30));
                 System.out.println("D - Add Deposit");
                 System.out.println("P - Make Payments");
                 System.out.println("L - Ledger");
-                System.out.println("X - Exit");
-                System.out.println("-".repeat(30));
+                System.out.println(Colors.RED + "X - Exit"+ Colors.RESET);
+                System.out.println(Colors.YELLOW+ "-".repeat(30));
+                System.out.print(Colors.RESET);
                 System.out.print("Enter your choice: ");
                 return userInput.nextLine().strip().toLowerCase();
 
             } catch (Exception ex) {
-                System.out.println("invalid selection!");
+                System.out.println(Colors.RED + "invalid selection!"+Colors.RESET);
             }
         }
     }
@@ -52,7 +56,7 @@ public class UserInterface
                 }
             }
             catch (Exception ex) {
-                System.out.println("invalid input!");
+                System.out.println(Colors.RED +"invalid input!"+Colors.RESET);
             }
 
         }
@@ -80,7 +84,7 @@ public class UserInterface
                 }
             }
             catch (Exception ex) {
-                System.out.println("invalid input!");
+                System.out.println(Colors.RED +"invalid input!"+Colors.RESET);
             }
         }
     }
@@ -92,28 +96,29 @@ public class UserInterface
         {
             try
             {
-                System.out.println();
+                System.out.println(Colors.BLUE);
                 System.out.println("Ledger Screen");
-                System.out.println("---------------------------------");
+                System.out.println("-".repeat(30));
                 System.out.println("A - All Entries");
                 System.out.println("D - Deposits");
                 System.out.println("P - Payments");
                 System.out.println("R - Reports");
-                System.out.println("H - Home");
-                System.out.println();
+                System.out.println(Colors.GREEN + "H - Home"+ Colors.RESET);
+                System.out.println(Colors.BLUE + "-".repeat(30));
+                System.out.print(Colors.RESET);
                 System.out.print("Enter your choice: ");
                 return userInput.nextLine().strip().toLowerCase();
             }
             catch(Exception ex)
             {
-                System.out.println("Invalid selection. Please Try Again.");
+                System.out.println(Colors.RED + "Invalid selection. Please Try Again." + Colors.RESET);
             }
         }
 
     }
     public void displayEntries()
     {
-        ArrayList<LogEntry> logEntries = logger.readEntries();
+        List<LogEntry> logEntries = logger.readEntries();
         System.out.println();
         System.out.println("All Entries");
         System.out.println("-".repeat(70));
@@ -130,7 +135,10 @@ public class UserInterface
 
     public void displayDeposits()
     {
+        System.out.println("All Deposits");
+        System.out.println("-".repeat(70));
         ArrayList<LogEntry> logEntries = logger.readEntries();
+        Collections.reverse(logEntries);
         for(LogEntry entry: logEntries){
 
             if (entry.getAmount() > 0 )
@@ -142,7 +150,10 @@ public class UserInterface
 
     public void displayPayments()
     {
+        System.out.println("All Payments");
+        System.out.println("-".repeat(70));
         ArrayList<LogEntry> logEntries = logger.readEntries();
+        Collections.reverse(logEntries);
         for(LogEntry entry: logEntries){
 
             if (entry.getAmount() < 0 ){
@@ -156,23 +167,24 @@ public class UserInterface
         {
             try
             {
-                System.out.println();
+                System.out.println(Colors.PURPLE);
                 System.out.println("Report Screen");
-                System.out.println("---------------------------------");
+                System.out.println("-".repeat(30));
                 System.out.println("Search By: ");
                 System.out.println("1 - Month To Date");
                 System.out.println("2 - Previous Month");
                 System.out.println("3 - Year To Date");
                 System.out.println("4 - Previous Year");
                 System.out.println("5 - Search By Vendor");
-                System.out.println("0 - Exit To Ledger Screen");
-                System.out.println();
+                System.out.println(Colors.BLUE + "0 - Exit To Ledger Screen"+ Colors.RESET);
+                System.out.println(Colors.PURPLE + "-".repeat(30));
+                System.out.print(Colors.RESET);
                 System.out.print("Enter your choice: ");
                 return Integer.parseInt(userInput.nextLine().strip());
             }
             catch(Exception ex)
             {
-                System.out.println("Invalid selection. Please Try Again.");
+                System.out.println(Colors.RED + "Invalid selection. Please Try Again."+ Colors.RESET);
             }
         }
     }
@@ -188,9 +200,13 @@ public class UserInterface
             }
             catch(Exception ex)
             {
-                System.out.println("Invalid Input. Please Try Again.");
+                System.out.println(Colors.RED + "Invalid selection. Please Try Again."+ Colors.RESET);
             }
         }
+    }
+
+    public void message(String displayString){
+        System.out.println(displayString);
     }
 
 }
