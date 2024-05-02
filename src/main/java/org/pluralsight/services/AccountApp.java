@@ -1,4 +1,5 @@
 package org.pluralsight.services;
+import org.pluralsight.models.CustomSearch;
 import org.pluralsight.models.LogEntry;
 import org.pluralsight.models.Report;
 import org.pluralsight.ui.Colors;
@@ -17,7 +18,18 @@ public class AccountApp
 
     public void run()
     {
-        System.out.println("Welcome!");
+        ui.message(" \n" +
+                "\n" +
+                " .+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+. \n" +
+                "(     __        __   _                                )\n" +
+                " )    \\ \\      / /__| | ___ ___  _ __ ___   ___      ( \n" +
+                "(      \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\      )\n" +
+                " )      \\ V  V /  __/ | (_| (_) | | | | | |  __/     ( \n" +
+                "(        \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|      )\n" +
+                " )                                                   ( \n" +
+                "(                                                     )\n" +
+                " \"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\"+.+\" \n" +
+                "\n");
         while(true)
         {
 
@@ -31,14 +43,17 @@ public class AccountApp
                 case "p":
                     ui.makePayment();
                     break;
+                case"s":
+                    ui.addToSavings();
+                    break;
                 case "l":
                     ledgerDisplay();
                     break;
                 case "x":
-                    System.out.println("Goodbye!");
+                    ui.message("Goodbye!");
                     return;
                 default:
-                    System.out.println(Colors.RED + "****That was an invalid selection.****"+ Colors.RESET);
+                    ui.message(Colors.RED + "****That was an invalid selection.****"+ Colors.RESET);
                     break;
             }
 
@@ -62,11 +77,14 @@ public class AccountApp
                 case "p":
                     ui.displayPayments();
                     break;
+                case "s":
+                    ui.displaySavings();
+                    break;
                 case "r":
                     reportDisplayScreen();
                     break;
                 case "h":
-                    ui.message(Colors.CYAN+"Back to home screen we go!!"+ Colors.RESET);
+                    ui.message(Colors.YELLOW+"Back to Home screen we go!!"+ Colors.RESET);
 
                     return;
                 default:
@@ -89,41 +107,37 @@ public class AccountApp
             {
                 case 1:
                     List<LogEntry> monthToDate = Report.monthToDate(logEntryList);
-                    Collections.reverse(monthToDate);
                     ui.message("\nMonth to date Report: ");
-                    ui.message("-".repeat(60));
+                    ui.message("-".repeat(120));
                     Report.reportResults(monthToDate);
                     break;
                 case 2:
                     List<LogEntry> previousMonth = Report.previousMonth(logEntryList);
-                    Collections.reverse(previousMonth);
                     ui.message("\nPrevious Month Report: ");
-                    ui.message("-".repeat(60));
+                    ui.message("-".repeat(120));
                     Report.reportResults(previousMonth);
                     break;
                 case 3:
                     List<LogEntry> yearToDate = Report.yearToDate(logEntryList);
-                    Collections.reverse(yearToDate);
                     ui.message("\nYear to date Report ");
-                    ui.message("-".repeat(60));
+                    ui.message("-".repeat(120));
                     Report.reportResults(yearToDate);
                     break;
                 case 4:
                     List<LogEntry> previousYear = Report.previousYear(logEntryList);
-                    Collections.reverse(previousYear);
                     ui.message("\nPrevious Year Report: ");
-                    ui.message("-".repeat(60));
+                    ui.message("-".repeat(120));
                     Report.reportResults(previousYear);
                     break;
                 case 5:
                     String name = ui.getVendorName();
                     ui.message("\nVendor Report ");
-                    ui.message("-".repeat(60));
+                    ui.message("-".repeat(120));
                     List<LogEntry> searchVendor = Report.searchByVendor(logEntryList,name);
                     Report.reportResults(searchVendor);
                     break;
                 case 0:
-                    ui.message(Colors.CYAN+"Back to Ledger screen we go!!"+ Colors.RESET);
+                    ui.message(Colors.YELLOW+"Back to Ledger screen we go!!"+ Colors.RESET);
                     return;
                 default:
                     ui.message(Colors.RED+"*****That was an invalid selection.******"+Colors.RESET);

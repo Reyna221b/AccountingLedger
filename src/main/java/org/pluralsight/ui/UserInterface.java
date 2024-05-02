@@ -1,13 +1,15 @@
 package org.pluralsight.ui;
 
+import org.pluralsight.models.CustomSearch;
 import org.pluralsight.services.Logger;
 import org.pluralsight.models.LogEntry;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.List;
-import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class UserInterface
 {
@@ -18,14 +20,15 @@ public class UserInterface
     {
         while (true) {
             try {
-                System.out.println(Colors.YELLOW);
+                System.out.println(Colors.CYAN);
                 System.out.println("Home Screen");
                 System.out.println("-".repeat(30));
                 System.out.println("D - Add Deposit");
                 System.out.println("P - Make Payments");
+                System.out.println("S - Savings");
                 System.out.println("L - Ledger");
                 System.out.println(Colors.RED + "X - Exit"+ Colors.RESET);
-                System.out.println(Colors.YELLOW+ "-".repeat(30));
+                System.out.println(Colors.CYAN+ "-".repeat(30));
                 System.out.print(Colors.RESET);
                 System.out.print("Enter your choice: ");
                 return userInput.nextLine().strip().toLowerCase();
@@ -67,9 +70,9 @@ public class UserInterface
     {
         while (true) {
             try {
-                System.out.print("Please enter a description of what you purchased:  ");
+                System.out.print("Please describe purchase:  ");
                 String itemDescription = userInput.nextLine().strip();
-                System.out.print("Please enter vendor's name: ");
+                System.out.print("Please enter who you paid: ");
                 String name = userInput.nextLine().strip();
                 System.out.print("Please enter the amount paid: $ ");
                 double amount = Double.parseDouble(userInput.nextLine().strip());
@@ -78,7 +81,11 @@ public class UserInterface
 
                 System.out.print("\nWould you like to make another Payment? (Y/N): ");
                 String input = userInput.nextLine().toLowerCase().strip();
-                if(input.equals("n")||input.equals("no"))
+                if(input.equals("y")||input.equals("yes"))
+                {
+                    continue;
+                }
+                else
                 {
                     break;
                 }
@@ -87,6 +94,37 @@ public class UserInterface
                 System.out.println(Colors.RED +"invalid input!"+Colors.RESET);
             }
         }
+    }
+
+    public void addToSavings()
+    {
+        while (true) {
+            try {
+                System.out.print("Please enter the amount you would like to add to your savings: ");
+                double amount = Double.parseDouble(userInput.nextLine().strip());
+                System.out.print("Please enter a savings category(car, home, general, etc): ");
+                String name = userInput.nextLine().strip().toLowerCase();
+                String invoice = "Savings" ;
+
+                logger.logMessage(invoice, name, amount);
+                System.out.println("You have successfully deposited $ " + amount + " to your " + name + " savings .");
+                System.out.print("\nWould you like to make another deposit? (Y/N): ");
+                String input = userInput.nextLine().toLowerCase().strip();
+                if(input.equals("y")||input.equals("yes"))
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            catch (Exception ex) {
+                System.out.println(Colors.RED +"invalid input!"+Colors.RESET);
+            }
+
+        }
+
     }
 
 
@@ -103,6 +141,7 @@ public class UserInterface
                 System.out.println("D - Deposits");
                 System.out.println("P - Payments");
                 System.out.println("R - Reports");
+                System.out.println("S - Savings");
                 System.out.println(Colors.GREEN + "H - Home"+ Colors.RESET);
                 System.out.println(Colors.BLUE + "-".repeat(30));
                 System.out.print(Colors.RESET);
@@ -120,8 +159,8 @@ public class UserInterface
     {
         List<LogEntry> logEntries = logger.readEntries();
         System.out.println();
-        System.out.println("All Entries");
-        System.out.println("-".repeat(70));
+        System.out.println("\nAll Entries");
+        System.out.println("-".repeat(140));
 
         for (int i = logEntries.size()-1; i >= 0; i--){
 
@@ -135,31 +174,72 @@ public class UserInterface
 
     public void displayDeposits()
     {
-        System.out.println("All Deposits");
-        System.out.println("-".repeat(70));
+        System.out.println("\nAll Deposits");
+        System.out.println("-".repeat(140));
         ArrayList<LogEntry> logEntries = logger.readEntries();
         Collections.reverse(logEntries);
+        double total = 0;
         for(LogEntry entry: logEntries){
 
             if (entry.getAmount() > 0 )
             {
                 System.out.println(entry);
+                total += entry.getAmount();
             }
         }
+        System.out.printf(Colors.YELLOW + "Total Deposit: $ %.2f" + Colors.RESET, total);
     }
 
     public void displayPayments()
     {
-        System.out.println("All Payments");
-        System.out.println("-".repeat(70));
+        System.out.println("\nAll Payments");
+        System.out.println("-".repeat(140));
         ArrayList<LogEntry> logEntries = logger.readEntries();
         Collections.reverse(logEntries);
+        double total = 0;
         for(LogEntry entry: logEntries){
 
             if (entry.getAmount() < 0 ){
                 System.out.println(entry);
+                total += entry.getAmount();
             }
         }
+        System.out.printf(Colors.YELLOW + "Total Payments: $ %.2f" + Colors.RESET, total);
+    }
+
+    public void displaySavings()
+    {
+        HashMap<String, Double> savingsMaps = new HashMap<>();
+        System.out.println("\nAll Savings");
+        System.out.println("-".repeat(140));
+        ArrayList<LogEntry> logEntries = logger.readEntries();
+        Collections.reverse(logEntries);
+
+        double total = 0;
+        for (LogEntry savings : logEntries.stream().filter(entry -> entry.getDescription().
+                        equalsIgnoreCase("Savings")).
+                collect((Collectors.toList())))
+        {
+            double categoryTotal = savingsMaps.getOrDefault(savings.getVendor(), 0.0);
+            categoryTotal += savings.getAmount();
+            savingsMaps.put(savings.getVendor(), categoryTotal);
+
+            System.out.println(savings);
+
+            total += savings.getAmount();
+        }
+
+        for (Map.Entry<String, Double> entry : savingsMaps.entrySet()) {
+            System.out.printf("Total " + entry.getKey() + " Savings: $ %.2f\n", entry.getValue());
+        }
+        System.out.printf(Colors.YELLOW + "Total Savings: $ %.2f\n" + Colors.RESET, total);
+
+    }
+
+    public void savingsTotalPerCategory(HashMap<String, Double>totals)
+    {
+
+
     }
 
     public int getReportDisplay(){
@@ -204,6 +284,7 @@ public class UserInterface
             }
         }
     }
+
 
     public void message(String displayString){
         System.out.println(displayString);

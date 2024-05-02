@@ -48,10 +48,6 @@ public class Report
                         .collect(Collectors.toList());
         }
 
-       //public static List<LogEntry> customSearch(List<LogEntry>logEntries)
-       // {
-
-       // }
 
         public static void reportResults(List<LogEntry>logEntries)
         {
