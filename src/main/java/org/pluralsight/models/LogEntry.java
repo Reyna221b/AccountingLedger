@@ -7,6 +7,7 @@ import java.time.LocalTime;
 
 public class LogEntry
 {
+    private  LocalDate times;
     private LocalDate date;
     private LocalTime time;
     private String description;
@@ -20,6 +21,14 @@ public class LogEntry
         this.description = description;
         this.vendor = vendor;
         this.amount = amount; 
+    }
+    public LogEntry(LocalDate date, LocalDate times, String description, String vendor, double amount)
+    {
+        this.date = date;
+        this.times = times;
+        this.description = description;
+        this.vendor = vendor;
+        this.amount = amount;
     }
 
 

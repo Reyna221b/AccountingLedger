@@ -134,6 +134,9 @@ public class AccountApp
                     List<LogEntry> searchVendor = Report.searchByVendor(logEntryList,name);
                     Report.reportResults(searchVendor);
                     break;
+                case 6:
+                    Report.reportResults(ui.userInputSearch());
+                    break;
                 case 0:
                     ui.message(Colors.YELLOW+"Back to Ledger screen we go!!"+ Colors.RESET);
                     return;

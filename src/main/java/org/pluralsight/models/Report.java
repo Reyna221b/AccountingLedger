@@ -1,8 +1,10 @@
 package org.pluralsight.models;
+import java.util.ArrayList;
 
 import java.util.Collections;
 import java.util.List;
 import java.time.LocalDate;
+
 import java.util.stream.Collectors;
 
 public class Report
@@ -60,6 +62,17 @@ public class Report
                 {
                         System.out.println("No records found.");
                 }
+        }
+
+        public static List<LogEntry> customSearch(List<LogEntry> logEntries, LocalDate startDate, LocalDate endDate,
+                                                  String description, String vendor, Double amount) {
+            return logEntries.stream()
+                        .filter(entry -> startDate == null || entry.getDate().isAfter(startDate.minusDays(1)))
+                        .filter(entry -> endDate == null || entry.getDate().isBefore(endDate.plusDays(1)))
+                        .filter(entry -> description.isEmpty() || entry.getDescription().equalsIgnoreCase(description))
+                        .filter(entry -> vendor.isEmpty() || entry.getVendor().equalsIgnoreCase(vendor))
+                        .filter(entry -> amount == null || entry.getAmount() == amount)
+                        .collect(Collectors.toCollection(ArrayList::new));
         }
 
 }

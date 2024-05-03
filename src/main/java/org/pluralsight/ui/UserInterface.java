@@ -1,8 +1,10 @@
 package org.pluralsight.ui;
 
+import org.pluralsight.models.Report;
 import org.pluralsight.services.Logger;
 import org.pluralsight.models.LogEntry;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,13 +19,13 @@ public class UserInterface
         while (true) {
             try {
                 System.out.println(Colors.CYAN);
-                System.out.println("Home Screen");
+                System.out.println("\t\tHome Screen");
                 System.out.println("-".repeat(30));
-                System.out.println("D - Add Deposit");
-                System.out.println("P - Make Payments");
-                System.out.println("S - Savings");
-                System.out.println("L - Ledger");
-                System.out.println(Colors.RED + "X - Exit"+ Colors.RESET);
+                System.out.println("[D] - Add Deposit");
+                System.out.println("[P] - Make Payments");
+                System.out.println("[S] - Savings");
+                System.out.println("[L] - Ledger");
+                System.out.println(Colors.RED + "[X] - Exit"+ Colors.RESET);
                 System.out.println(Colors.CYAN+ "-".repeat(30));
                 System.out.print(Colors.RESET);
                 System.out.print("Enter your choice: ");
@@ -73,16 +75,11 @@ public class UserInterface
                 System.out.print("Please enter the amount paid: $ ");
                 double amount = Double.parseDouble(userInput.nextLine().strip());
                 amount = amount * -1;
-                logger.logMessage(itemDescription,name,amount);
+                logger.logMessage(itemDescription, name, amount);
 
                 System.out.print("\nWould you like to make another Payment? (Y/N): ");
                 String input = userInput.nextLine().toLowerCase().strip();
-                if(input.equals("y")||input.equals("yes"))
-                {
-                    continue;
-                }
-                else
-                {
+                if (!input.equals("y") && !input.equals("yes")) {
                     break;
                 }
             }
@@ -106,14 +103,11 @@ public class UserInterface
                 System.out.println("You have successfully deposited $ " + amount + " to your " + name + " savings.");
                 System.out.print("\nWould you like to make another deposit? (Y/N): ");
                 String input = userInput.nextLine().toLowerCase().strip();
-                if(input.equals("y")||input.equals("yes"))
-                {
-                    continue;
-                }
-                else
+                if(!input.equals("y") && !input.equals("yes"))
                 {
                     break;
                 }
+
             }
             catch (Exception ex) {
                 System.out.println(Colors.RED +"invalid input!"+Colors.RESET);
@@ -131,13 +125,13 @@ public class UserInterface
             try
             {
                 System.out.println(Colors.BLUE);
-                System.out.println("Ledger Screen");
+                System.out.println("\t\tLedger Screen");
                 System.out.println("-".repeat(30));
-                System.out.println("A - All Entries");
-                System.out.println("D - Deposits");
-                System.out.println("P - Payments");
-                System.out.println("R - Reports");
-                System.out.println("S - Savings");
+                System.out.println("[A] - All Entries");
+                System.out.println("[D] - Deposits");
+                System.out.println("[P] - Payments");
+                System.out.println("[S] - Savings");
+                System.out.println("[R] - Reports");
                 System.out.println(Colors.GREEN + "H - Home"+ Colors.RESET);
                 System.out.println(Colors.BLUE + "-".repeat(30));
                 System.out.print(Colors.RESET);
@@ -239,15 +233,16 @@ public class UserInterface
             try
             {
                 System.out.println(Colors.PURPLE);
-                System.out.println("Report Screen");
+                System.out.println("\t\tReport Screen");
                 System.out.println("-".repeat(30));
                 System.out.println("Search By: ");
-                System.out.println("1 - Month To Date");
-                System.out.println("2 - Previous Month");
-                System.out.println("3 - Year To Date");
-                System.out.println("4 - Previous Year");
-                System.out.println("5 - Search By Vendor");
-                System.out.println(Colors.BLUE + "0 - Exit To Ledger Screen"+ Colors.RESET);
+                System.out.println("[1] - Month To Date");
+                System.out.println("[2] - Previous Month");
+                System.out.println("[3] - Year To Date");
+                System.out.println("[4] - Previous Year");
+                System.out.println("[5] - Search By Vendor");
+                System.out.println("[6] - Custom Search");
+                System.out.println(Colors.BLUE + "[0] - Exit To Ledger Screen"+ Colors.RESET);
                 System.out.println(Colors.PURPLE + "-".repeat(30));
                 System.out.print(Colors.RESET);
                 System.out.print("Enter your choice: ");
@@ -259,6 +254,50 @@ public class UserInterface
             }
         }
     }
+
+    public List <LogEntry> userInputSearch(){
+
+            while(true){
+
+                try {
+                    List<LogEntry> search = logger.readEntries();
+                    System.out.println("\nCustom Search:");
+                    System.out.println("-".repeat(60));
+
+                    System.out.print("Enter start date (yyyy-MM-dd) or leave empty: ");
+                    String startDateStr = userInput.nextLine().strip();
+                    LocalDate startDate = startDateStr.isEmpty() ? null : LocalDate.parse(startDateStr);
+
+                    System.out.print("Enter end date (yyyy-MM-dd) or leave empty: ");
+                    String endDateStr = userInput.nextLine().strip();
+                    LocalDate endDate = endDateStr.isEmpty() ? null : LocalDate.parse(endDateStr);
+
+                    System.out.print("Enter description or leave empty: ");
+                    String description = userInput.nextLine().trim().toLowerCase();
+
+                    System.out.print("Enter vendor or leave empty: ");
+                    String vendor = userInput.nextLine().strip().toLowerCase();
+
+                    System.out.print("Enter amount or leave empty: ");
+                    String amountStr = userInput.nextLine().strip();
+                    Double amount = amountStr.isEmpty() ? null : Double.parseDouble(amountStr);
+
+                    System.out.println("\nFiltered Results: ");
+                    System.out.println("-".repeat(138));
+
+                    return Report.customSearch(search,startDate,endDate,description,vendor, amount);
+
+                }
+                catch(Exception ex)
+                {
+                    System.out.println(Colors.RED + "Invalid selection. Please Try Again."+ Colors.RESET);
+                }
+
+            }
+
+    }
+
+
 
     public String getVendorName()
     {
@@ -275,7 +314,6 @@ public class UserInterface
             }
         }
     }
-
 
     public void message(String displayString){
         System.out.println(displayString);
