@@ -70,7 +70,7 @@ It also displays varies types of reports with detailed information about the dat
 ```
 
 
->**Interest Piece:** One piece I enjoyed implementing was the savings menu option. I thought it would be a pretty simple to implment but then realized I wanted to include the total for each category. like if you're saving for a house it would show you the total savings you've contributed for the house savings. Since, I didn't have much experience with hashmap it was a bit tough to implement but luckily it works as intended!
+>**Interest Piece:** One piece I enjoyed implementing was the savings menu option. I thought it would be pretty simple to implment but then realized I wanted to include the total for each category. like if you're saving for a house it would show you the total savings you've contributed for the house savings. Since, I didn't have much experience with hashmap it was a bit tough to implement but luckily it works as intended!
 
 ```java
 public void displaySavings()
