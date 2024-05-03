@@ -70,9 +70,9 @@ public class UserInterface
             try {
                 System.out.print("Please describe purchase:  ");
                 String itemDescription = userInput.nextLine().strip();
-                System.out.print("Please enter who you paid: ");
+                System.out.print("Please enter vendor paid: ");
                 String name = userInput.nextLine().strip();
-                System.out.print("Please enter the amount paid: $ ");
+                System.out.print("Please enter amount paid: $ ");
                 double amount = Double.parseDouble(userInput.nextLine().strip());
                 amount = amount * -1;
                 logger.logMessage(itemDescription, name, amount);
@@ -132,7 +132,7 @@ public class UserInterface
                 System.out.println("[P] - Payments");
                 System.out.println("[S] - Savings");
                 System.out.println("[R] - Reports");
-                System.out.println(Colors.GREEN + "H - Home"+ Colors.RESET);
+                System.out.println(Colors.GREEN + "[H] - Home"+ Colors.RESET);
                 System.out.println(Colors.BLUE + "-".repeat(30));
                 System.out.print(Colors.RESET);
                 System.out.print("Enter your choice: ");

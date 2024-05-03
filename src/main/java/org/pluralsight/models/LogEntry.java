@@ -22,15 +22,6 @@ public class LogEntry
         this.vendor = vendor;
         this.amount = amount; 
     }
-    public LogEntry(LocalDate date, LocalDate times, String description, String vendor, double amount)
-    {
-        this.date = date;
-        this.times = times;
-        this.description = description;
-        this.vendor = vendor;
-        this.amount = amount;
-    }
-
 
     public LocalDate getDate()
     {
