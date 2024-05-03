@@ -11,7 +11,7 @@ It also displays varies types of reports with detailed information about the dat
 ![Welcome Display ](images/welcomemenu.jpg)
 
 >This diagram I used heavily to see how I wanted to structure my classes. 
-I would also do pseudo code on my notebook to get a better idea of my methods or what direction I wanted to do with.
+I would also do pseudo code on my notebook to get a better idea of my methods or what direction I wanted to go with.
 
 ![diagram](images/diagram.jpg)
 
