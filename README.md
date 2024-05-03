@@ -10,7 +10,7 @@ It also displays varies types of reports with detailed information about the dat
 
 ![Welcome Display ](images/welcomemenu.jpg)
 
->Skeleton view on how I would implement my welcome screen
+
 
 
 
@@ -31,7 +31,7 @@ It also displays varies types of reports with detailed information about the dat
 
 
 ## Code 
-> `Report` Class has all the methods that return a new List within the specific criteria 
+> `Report` Class has all the methods that return a new List within the specified criteria 
 ```java
    public class Report
 {
