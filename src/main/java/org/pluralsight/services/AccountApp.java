@@ -1,11 +1,9 @@
 package org.pluralsight.services;
-import org.pluralsight.models.CustomSearch;
 import org.pluralsight.models.LogEntry;
 import org.pluralsight.models.Report;
 import org.pluralsight.ui.Colors;
 import org.pluralsight.ui.UserInterface;
 
-import java.util.Collections;
 import java.util.List;
 
 

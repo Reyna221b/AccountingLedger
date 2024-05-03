@@ -1,12 +1,8 @@
 package org.pluralsight.ui;
 
-import org.pluralsight.models.CustomSearch;
 import org.pluralsight.services.Logger;
 import org.pluralsight.models.LogEntry;
 
-import java.awt.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,7 +103,7 @@ public class UserInterface
                 String invoice = "Savings" ;
 
                 logger.logMessage(invoice, name, amount);
-                System.out.println("You have successfully deposited $ " + amount + " to your " + name + " savings .");
+                System.out.println("You have successfully deposited $ " + amount + " to your " + name + " savings.");
                 System.out.print("\nWould you like to make another deposit? (Y/N): ");
                 String input = userInput.nextLine().toLowerCase().strip();
                 if(input.equals("y")||input.equals("yes"))
@@ -187,7 +183,7 @@ public class UserInterface
                 total += entry.getAmount();
             }
         }
-        System.out.printf(Colors.YELLOW + "Total Deposit: $ %.2f" + Colors.RESET, total);
+        System.out.printf(Colors.YELLOW + "Total Deposit: $ %.2f\n" + Colors.RESET, total);
     }
 
     public void displayPayments()
@@ -204,7 +200,7 @@ public class UserInterface
                 total += entry.getAmount();
             }
         }
-        System.out.printf(Colors.YELLOW + "Total Payments: $ %.2f" + Colors.RESET, total);
+        System.out.printf(Colors.YELLOW + "Total Payments: $ %.2f\n" + Colors.RESET, total);
     }
 
     public void displaySavings()
@@ -236,11 +232,6 @@ public class UserInterface
 
     }
 
-    public void savingsTotalPerCategory(HashMap<String, Double>totals)
-    {
-
-
-    }
 
     public int getReportDisplay(){
         while (true)
